@@ -16,6 +16,8 @@ def random_tables(players):
     tables = []
     options = possible_tables.copy()
     failures = 0
+    if len(options) == 0:
+        return None
     while len(tables) < TABLES:
         if len(options) == 0:
             tables = []
