@@ -6,6 +6,7 @@
 import networkx as nx
 from itertools import combinations, chain
 from sys import argv
+from functools import lru_cache
 
 TABLES = 10 if len(argv) == 1 else int(argv[1])
 PLAYERS_AT_TABLE = 4 if len(argv) <= 2 else int(argv[2])
@@ -13,8 +14,10 @@ NO_OF_PLAYERS = PLAYERS_AT_TABLE * TABLES
 
 def all_k_cliques(graph, k):
     return map(tuple, chain.from_iterable(combinations(clq, k) for clq in nx.find_cliques(graph) if len(clq)>=k))
+
+@lru_cache(maxsize=32)
 def all_pairs(tables):
-    return map(tuple, chain.from_iterable(combinations(table, 2) for table in tables))
+    return set(chain.from_iterable(combinations(table, 2) for table in tables))
 
 G = nx.complete_graph(NO_OF_PLAYERS)
 print("graph G generated")
@@ -29,14 +32,17 @@ I.add_nodes_from(all_k_cliques(H, TABLES))
 print("graph I - added nodes")
 for node, node2 in combinations(I.nodes(), 2):
     no_repeats = True
-    pairs = set(all_pairs(node))
-    for pair in all_pairs(node2):
+    pairs = all_pairs(node)
+    pairs2 = all_pairs(node2)
+    for pair in pairs2:
         if pair in pairs:
             no_repeats = False
             break
     if no_repeats:
         I.add_edge(node, node2)
 print("graph I - added edges")
+print(len(I.nodes()))
+print(len(I.edges()))
 k_max = int((NO_OF_PLAYERS - 1) / (PLAYERS_AT_TABLE - 1))
 found = False
 while not found:
