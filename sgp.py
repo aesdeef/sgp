@@ -46,9 +46,13 @@ if __name__ == '__main__':
         tables = random_tables(players)
         if tables:
             rounds += 1
+            play_round(tables)
+            for i, table in enumerate(tables):
+                table = list(table)
+                shuffle(table)
+                tables[i] = tuple(table)
             print("Round %d\a" % rounds)
             print(tables)
-            play_round(tables)
         else:
             print('---')
             break
