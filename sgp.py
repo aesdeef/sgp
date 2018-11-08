@@ -10,7 +10,7 @@ from functools import lru_cache
 
 TABLES = 10 if len(argv) == 1 else int(argv[1])
 ROUNDS = 4 if len(argv) <= 2 else int(argv[2])
-TRESHOLD = 200 if len(argv) <= 3 else int(argv[3])
+THRESHOLD = 200 if len(argv) <= 3 else int(argv[3])
 NO_OF_PLAYERS = 4 * TABLES
 spreadsheet_friendly_output = True
 
@@ -207,7 +207,7 @@ def reorder(rounds):
     return False
 
 
-def set_tables(rounds, players, treshold=0):
+def set_tables(rounds, players, threshold=0):
     tables = {i: list_tables(rounds, i) for i in players}
     score = {i: eval_tables(tables[i]) for i in players}
     sum_of_scores = sum(score.values())
@@ -218,7 +218,7 @@ def set_tables(rounds, players, treshold=0):
     best_score = 1000000
     best_rounds = None
     rounds = tuple_rounds(rounds)
-    while sum_of_scores > treshold:
+    while sum_of_scores > threshold:
         if sum_of_scores < best_score:
             best_rounds = (score, tuple_rounds(rounds))
             if sum_of_scores == 0:
@@ -264,7 +264,7 @@ if __name__ == '__main__':
     print('assigning starting winds...', flush=True)
     rounds = set_winds(rounds, players)
     print('assigning table numbers...', flush=True)
-    rounds = set_tables(list(rounds), players, TRESHOLD)
+    rounds = set_tables(list(rounds), players, THRESHOLD)
     if not rounds:
         exit('Something went wrong.')
     while True:
@@ -283,11 +283,11 @@ if __name__ == '__main__':
                 print(f'Round {i}', flush=True)
                 for table in round_:
                     print(table, flush=True)
-        if TRESHOLD > 0:
-            new_treshold = int(input(f'current treshold = {TRESHOLD}, new treshold: '))
-            if new_treshold < TRESHOLD:
-                TRESHOLD = new_treshold
-                rounds = set_tables(rounds, players, TRESHOLD)
+        if THRESHOLD > 0:
+            new_threshold = int(input(f'current threshold = {THRESHOLD}, new threshold: '))
+            if new_threshold < THRESHOLD:
+                THRESHOLD = new_threshold
+                rounds = set_tables(rounds, players, THRESHOLD)
             else:
                 break
         else:

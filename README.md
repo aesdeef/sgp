@@ -2,7 +2,7 @@
 SGP is a pairings generator for mahjong tournaments. It guarantees that no two players will play with each other more than once and spreads starting seats evenly. It also does its best to avoid having players sit at the same table more than once.
 
 # Usage
-`sgp.py [Number of tables] [Number of rounds¹] [Treshold²]`
+`sgp.py [Number of tables] [Number of rounds¹] [Threshold²]`
 
 ¹ also known as hanchans
 
@@ -14,7 +14,7 @@ The program starts by generating possible tables and by randomly choosing and di
 ## Assigning starting seats
 Next the program randomises starting seats at all tables and gradually rearranges the seats so that each player gets each seat the same number of times (or as close to that as possible if the number of rounds is not divisible by 4).
 ## Assigning table numbers
-Finally the program rearranges the order of the tables in each round to minimise the number of times a player sits at the same table with the same set. It outputs the pairings once the variable used to measure this falls below the treshold with an option to continue its work to improve the pairings by setting a lower treshold. A treshold of 0 means that every player will play each game at a different table.
+Finally the program rearranges the order of the tables in each round to minimise the number of times a player sits at the same table with the same set. It outputs the pairings once the variable used to measure this falls below the threshold with an option to continue its work to improve the pairings by setting a lower threshold. A threshold of 0 means that every player will play each game at a different table.
 
 While this part is not very important, it minimises the chance of a player learning to recognise defective or marked tiles in a given set. If a non-standard set (or sets) has to be used, it minimises the number of games a player would have to play using it.
 
